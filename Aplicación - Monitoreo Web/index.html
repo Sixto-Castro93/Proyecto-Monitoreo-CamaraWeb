@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+    <title>Proyecto Diseño Sistemas</title>
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+  <script src="//cdn.firebase.com/v0/firebase.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/spin.js/1.2.7/spin.min.js"></script>
+  <script src="sha256.js"></script>
+  <script src="firepano.js"></script> 
+           <link rel="stylesheet" href="https://www.webrtc-experiment.com/style.css">
+         <script>
+            document.createElement('footer');
+        </script>
+</head>
+<body id="body" >
+<h1>Monitoreo de Camara con Intel Edison</h1>
+ <article align="center">
+   <table class="visible">
+                <tr>
+                  
+                    <td>
+					
+                        	<input type='button' id='ver' value='Visualizar Camara' onclick="visualizar();">
+                    </td>
+                </tr>
+            </table>
+			<div id="spin0">
+			 <p  id='aviso'></p>
+			</div>
+		<table class="visible">
+                <tr>
+                  
+                    <td>
+						<input type='button' id='derecha1' value='Hacia Derecha' onclick="derechaonclick();">
+                    </td>
+					  <td>
+                          <input type='button' id='izquierda1' value='Hacia Izquierda' onclick="izquierdaonclick();">
+                    </td>
+					 
+                </tr>
+            </table>
+
+  <img  class="pano" id="pano" width="800" height="800" />
+  <script>
+  var ban=0;
+  //Links para conectarse a la base en Firebase.
+  var messagesRef = new Firebase('https://foto12.firebaseio.com/snaps/');
+  var global = new Firebase('https://foto12.firebaseio.com/movimiento');
+  
+  //Función que nos permite decidir si deseamos visualizar el streaming o no.
+  function  visualizar() {
+  var bandera=true;
+    if(ban==0){
+	bandera=true;
+	ban=1;
+	  }
+	else {
+	ban=0;
+	 bandera=false;
+	}
+    global.update({
+      'snap': bandera
+    });
+
+  }
+  
+  var co=0;
+  var grado=90;
+
+//Función que nos permite enviar al Firebase un dato para indicar que el servo se debe de mover 30 grados hacia la derecha.
+ function derechaonclick() {
+   var message=0;
+   if((grado-30)>0){
+     message = grado-30;
+	 grado=message;}
+	 else {message=0;
+	 grado =0;}
+          var hopperRe = global.child('servo');
+    hopperRe.update({
+      'angulo': message
+    });
+	}
+
+	
+//Función que nos permite enviar al Firebase un dato para indicar que el servo se debe de mover 30 grados hacia la izquierda.
+ function izquierdaonclick(){
+ var message=0;
+ if((grado +30)<150){
+     var message = grado +30;
+	  grado=message;
+	  }
+	  else {message=150;
+	  grado=150;
+	  }
+    var hopperRef = global.child('servo');
+    hopperRef.update({
+      'angulo': message
+    });
+	}
+	
+	
+//Función que nos permite recoger el dato cada vez que haya un cambio en el nodo (Firebase) que contiene la imagen codificada en base64.
+  messagesRef.on("child_changed", function(snapshot) {
+    //GET DATA
+    var payload = snapshot.val();
+    if (payload != null) {
+        document.getElementById("pano").src = payload;
+      } else {
+        $('#body').append("Not found");
+      }
+  });
+  	
+	  
+//Función que nos permite recoger el dato del Firebase si es que se puede visualizar la cam o también si ha llegado al límite el movimiento de los servomotores.
+    global.on("child_changed", function(snapshot) {
+    var payload = snapshot.val();
+	var vi=payload.snap;
+	var an=payload.angulo;
+    if (payload) {
+        document.getElementById("pano").style.display = "block";
+      } else {
+         document.getElementById("pano").style.display = "none";
+      }
+	  if(an==0){
+	     document.getElementById("aviso").innerHTML = "ya no se puede girar mas hacia la derecha";
+	  }
+	  if(an>0 && an<150){
+	     document.getElementById("aviso").innerHTML = "";
+	  }
+	  if(an==150){
+	     document.getElementById("aviso").innerHTML = "ya no se puede girar mas hacia la izquierda";
+	  }
+  });
+</script>
+ </article>
+ <footer>
+            <p>
+				<p> Integrantes : Vasquez Jordy ; Sixto Castro</p>
+				<p> </p>
+                 <a href="https://github.com/Sixto-Castro93/Proyecto-Monitoreo-CamaraWeb" rel="author" target="_blank"> Link al repositorio</a>
+				 <p> Version 1.0</p>
+            </p>
+        </footer>
+</body>
+
+</html>
