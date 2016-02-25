@@ -1,14 +1,14 @@
 # Proyecto Monitoreo - Camara Web
 
 
-# Integrantes:
-Sixto Castro R.
-Jordy Vásquez C.
+## Integrantes:
+* Sixto Castro R.
+* Jordy Vásquez C.
 
 
 
 
-# Descripción del proyecto
+## Descripción del proyecto
 
 
 
