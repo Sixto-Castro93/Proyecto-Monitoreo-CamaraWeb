@@ -1,4 +1,4 @@
-# Proyecto Monitoreo - Cámara Web
+# Proyecto Cámara-monitoreo Web con Intel Edison
 
 
 ## Integrantes:
