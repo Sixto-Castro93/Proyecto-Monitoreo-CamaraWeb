@@ -24,3 +24,30 @@ El control del movimiento de la cámara, se la realiza desde la misma aplicació
 
 
 
+
+##Nota:
+
+
+
+Se debe instalar el IDE Intel XDK IoT. Una vez ya instalado usted debe crear un proyecto vacío para poder probar el código en el Intel Edison. El código se encuentra en el archivo main.js. A continuación siga los siguientes pasos:
+* Abrir el IDE: Intel XDK IoT Edition
+* Ir a Projects
+* Dar clic en Start a new Project.
+* En el lado izquierdo, donde dice Internet of things embedded applications, seleccionar Templates.
+* Luego escoger Blank Template.
+* Dar clic en Continue.
+* Luego, copiar el código del archivo indicado en el main.js que se crea por default.
+* En la parte inferior, seleccionar un dispositivo (IoT Device->edison ip).
+* Aparece un mensaje de conexión establecida.
+* En la parte inferior a lado de IoT Devices hay 5 íconos, hago clic en Manage your Daemon/IoT Device, escoger Sync PC time w/clock on target device.
+* Clic en Install/Build.
+* Clic en Upload (subir actual proyecto al dispositivo).
+* Finalmente Run (ejecutar el Proyecto que está actualmente instalado en el dispositivo).
+
+
+
+##Archivo pdf
+
+
+Ver ese archivo, ahí se encuentra toda la documentación del proyecto (incluyendo los recursos que se deben instalar para el funcionamiento del proyecto).
+
